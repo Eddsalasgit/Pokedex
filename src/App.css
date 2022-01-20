@@ -1,6 +1,5 @@
 .App {
     text-align: center;
-    background: "http://images6.fanpop.com/image/photos/38800000/pokemon-hd-wallpapers-3-AMB-kittygirldragon-38860768-2560-1600.jpg";
 }
 
 .btn-abilities {
@@ -25,6 +24,13 @@
     border: none;
     border-radius: 5px;
     font-size: 16px;
+}
+
+.datos {
+    display: flex;
+    flex-direction: row;
+    background: hsla(0, 0%, 0%, 0.7);
+    color: white;
 }
 
 .flex-container {
@@ -57,6 +63,9 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
+    background-image: url("http://images6.fanpop.com/image/photos/38800000/pokemon-hd-wallpapers-3-AMB-kittygirldragon-38860768-2560-1600.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .App-link {

@@ -44,6 +44,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <a href='https://github.com/Eddsalasgit/Pokedex'>GitHub</a>
         <div className='flex-container'>
           <img src={pokemon?.sprites?.front_default
             ?? "https://pngimg.com/uploads/pokeball/pokeball_PNG20.png"}
@@ -52,10 +53,13 @@ function App() {
             ?? "https://i.pinimg.com/originals/95/fc/30/95fc304b40461a9922bd1d3aff885496.png"}
             className="poke-image" alt="logo" />
         </div>
-
-        <p className='pokemonId'>{pokemon.id ?? "NO POKEMON SELECTED"}</p>
-        <p className='pokemonName'>{pokemon.name ?? "NO POKEMON SELECTED"}</p>
-
+        <div className='datos'>
+          <p className='pokemonId'>ID: {pokemon.id ?? "NO POKEMON SELECTED"}</p>
+        </div>
+        <div className='datos'>
+          <p className='pokemonName'>Nombre: {pokemon.name ?? "NO POKEMON SELECTED"}</p>
+        </div>
+        
         <div className='flex-container'>
           {/* <button className='button' onClick={()=>fetchPokemon(getBackInt())}>Back</button> */}
            {pokemon.id ? (
