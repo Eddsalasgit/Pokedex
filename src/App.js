@@ -6,11 +6,6 @@ function App() {
   const [pokemon, setPokemon]=useState({});
   const [buttonPopup, setButtonPopup]= useState(false);
 
-  const [active, setActive] = useState(false);
-  const toggle = () => {
-    setActive(!active);
-  };
-
   const fetchPokemon = (id) =>{
       fetch(` https://pokeapi.co/api/v2/pokemon/${id}`).then((response)=>
       response.json()
