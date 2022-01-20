@@ -1,22 +1,116 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import Popup from './components/Popup';
 
 function App() {
+  const [pokemon, setPokemon]=useState({});
+  const [buttonPopup, setButtonPopup]= useState(false);
+
+  const [active, setActive] = useState(false);
+  const toggle = () => {
+    setActive(!active);
+  };
+
+  const fetchPokemon = (id) =>{
+      fetch(` https://pokeapi.co/api/v2/pokemon/${id}`).then((response)=>
+      response.json()
+      ).then((data)=> setPokemon(data));
+  };
+
+  const getRandomInt = (min=1, max=600) => {
+    return Math.floor(Math.random()*(max-min)+(min));
+  }
+
+  const getNextInt = (min=1, max=600)=>{
+    if(pokemon.id >= max){
+      return pokemon.id = min;
+    }else{
+      return pokemon.id+1;
+    }
+  }
+  const getBackInt=(min=1, max=600)=>{
+    if(pokemon.id <= min){
+      return pokemon.id = max;
+    }else{
+      return pokemon.id -1;
+    }
+  }
+
+  useEffect(()=>{
+    console.log({pokemon});
+    pokemon?.abilities?.map((ability)=> console.log(ability.ability.name));
+  },[pokemon]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div className='flex-container'>
+          <img src={pokemon?.sprites?.front_default
+            ?? "https://pngimg.com/uploads/pokeball/pokeball_PNG20.png"}
+            className="poke-image" alt="logo" />
+          <img src={pokemon?.sprites?.back_default
+            ?? "https://i.pinimg.com/originals/95/fc/30/95fc304b40461a9922bd1d3aff885496.png"}
+            className="poke-image" alt="logo" />
+        </div>
+
+        <p className='pokemonId'>{pokemon.id ?? "NO POKEMON SELECTED"}</p>
+        <p className='pokemonName'>{pokemon.name ?? "NO POKEMON SELECTED"}</p>
+
+        <div className='flex-container'>
+          {/* <button className='button' onClick={()=>fetchPokemon(getBackInt())}>Back</button> */}
+           {pokemon.id ? (
+            <>
+              <button
+                className="button"
+                onClick={() => fetchPokemon(getBackInt())}
+              >
+                Back
+              </button>{" "}
+            </>
+          ) : (
+            <button className="button" onClick={() => fetchPokemon(600)}>
+              Back
+            </button>
+          )}
+
+          <button className='button'
+            onClick={() => fetchPokemon(getRandomInt())}>Random</button>
+
+          {/* <button className='button'
+            onClick={() => fetchPokemon(getNextInt())}>Next</button> */}
+          {pokemon.id ? (
+            <>
+              <button
+                className="button"
+                onClick={() => fetchPokemon(getNextInt())}
+              >
+                Next
+              </button>{" "}
+            </>
+            ) : (
+            <button className="button" onClick={() => fetchPokemon(1)}>
+              Next
+            </button>
+            )
+          }
+
+          <button className='btn-abilities' 
+          onClick={()=>setButtonPopup(true)}>Abilities</button>
+
+        </div>
+
+      <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+          <h3>{pokemon.name}</h3>
+          <ul className='text'>
+             {pokemon?.abilities?.map((ability)=>(
+               <li key={ability.ability.id}>
+                 {ability.ability.name}
+               </li>
+             ))
+             }
+          </ul>
+      </Popup>
+
       </header>
     </div>
   );
